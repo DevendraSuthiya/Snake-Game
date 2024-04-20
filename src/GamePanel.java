@@ -18,27 +18,27 @@ public class GamePanel extends JPanel implements ActionListener {
 	private static final int SCREEN_HEIGHT = 600;
 	 static final int UNIT_SIZE = 25;
 	private static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-	private static int DELAY = 200;
+	private static int DELAY = 200;//use to update frame
      final int snakeX[] = new int[GAME_UNITS]; // x cordinate of body of the snake
 	 final int snakeY[] = new int[GAME_UNITS]; // y coordinate of body of the snake
-	int snakeBodyParts = 4;
+	int snakeBodyParts = 4;//intial body size of snake is 4 it is increase when snake eat mouse
 	int score = 0;
 	int mouseX;
-	int mouseY; // random position of apple
+	int mouseY; // random position of normal mouse
 	int bigMouseX ;
-	int bigMouseY;
-	int countMouse=0;
+	int bigMouseY;//random position of big mouse
+	int countMouse=0;//counting for its time to draw a big mouse or not
 	char direction = 'R'; // snake begin to flow in right direction!
 	boolean running = false;
 	Timer timer;
-	Random random; // To generate random number
-	BigMouse bgMouse;
-	NormalMouse nrMouse;
+	Random random; // To generate random number that use to find new cordinates of mouse
+	BigMouse bgMouse;//object of BigMouse class
+	NormalMouse nrMouse;//object of NormalMouse class
 
 	GamePanel() {
 		random = new Random();
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-		this.setBackground(Color.BLACK); // To set BGC
+		this.setBackground(Color.BLACK); // To set Background Color
 		this.setFocusable(true); // By default , It is false we have set true
 		this.addKeyListener(new MyKeyAdapter());// For keyBoardInput
 		startGame();
@@ -48,31 +48,31 @@ public class GamePanel extends JPanel implements ActionListener {
 		draw(g);
 	}
 
-	// Method for draw Snake.
+	// Method for draw Snake and mouse.
 	public void draw(Graphics g) {
 
 		if (running) {
 			if(countMouse==5) {
 				 bgMouse = new BigMouse(this);
-				 bgMouse.paintComponent(g);
+				 bgMouse.paintComponent(g);//draw big mouse
 			
 			}
 			else {
 				 nrMouse = new NormalMouse(this);
-				 nrMouse.paintComponent(g);
+				 nrMouse.paintComponent(g);//draw normal mouse
 				 
 			}
 
 			
 
 			for (int i = 0; i < snakeBodyParts; i++) {
-				g.setColor(Color.green);
+				g.setColor(Color.green);//color of snake body
 				g.fillOval(snakeX[i], snakeY[i], UNIT_SIZE, UNIT_SIZE); // For Shape of Snake
 			}
-			g.setColor(Color.CYAN);
+			g.setColor(Color.CYAN);//color of snake head
 			g.fillOval(snakeX[0], snakeY[0], UNIT_SIZE, UNIT_SIZE);
 
-			g.setColor(Color.blue);
+			g.setColor(Color.WHITE);
 			g.setFont(new Font("Times New Roman", Font.BOLD, 40));
 			FontMetrics metrics = getFontMetrics(g.getFont()); // provides dimensions of that font
 
@@ -91,11 +91,11 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 	public void newBigMouse() {
 		
-		bigMouseX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+		bigMouseX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;//generates new cordinates of big mouse
 		bigMouseY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
 	}
 	public void newSmallMouse() {
-		mouseX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
+		mouseX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;// generates new cordinates of normal mouse
 		mouseY = random.nextInt((int) (SCREEN_HEIGHT / UNIT_SIZE)) * UNIT_SIZE;
 	}
 	public void moveSnake() {
@@ -129,8 +129,8 @@ public class GamePanel extends JPanel implements ActionListener {
 			}
 		}
 		if (snakeX[0] < 0) {
-			//running = false;
-			snakeX[0]=SCREEN_WIDTH;
+			//running = false;//if touch the border then out
+			snakeX[0]=SCREEN_WIDTH;//snake comes from opposite direction
 		}
 		if (snakeX[0] > SCREEN_WIDTH) {
 			snakeX[0]=0;
@@ -151,26 +151,26 @@ public class GamePanel extends JPanel implements ActionListener {
 	}
 	public void gameOver(Graphics g) {
 		// score text
-		g.setColor(Color.blue);
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("Times New Roman", Font.BOLD, 40));
 		FontMetrics metrics = getFontMetrics(g.getFont());
 		g.drawString("Score: " + score, (SCREEN_WIDTH - metrics.stringWidth("Score: " + score)) / 2,
 				SCREEN_HEIGHT / 10);
 
 		// game over text
-		g.setColor(Color.blue);
+		g.setColor(Color.WHITE);
 		g.setFont(new Font("Times New Roman", Font.BOLD, 75));
 		g.drawString("Game Over", SCREEN_WIDTH / 5, SCREEN_HEIGHT / 2);
 	}
 	public void actionPerformed(ActionEvent e) {
 
 		if (running) {
-			moveSnake();
+			moveSnake();//makes if there any changes in direction
 			if(countMouse==5) {
-				bgMouse.checkMouse();				
+				bgMouse.checkMouse();//check for score if eat big mouse score increase by 4			
 			}
 			else {
-				nrMouse.checkMouse();			
+				nrMouse.checkMouse();//check for score if eat normal mouse score increase by 1		
 			}
 			
 			checkCollisions();
