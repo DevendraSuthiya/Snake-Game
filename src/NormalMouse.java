@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 public class NormalMouse extends JPanel implements DrawMouse {
 	int mouseX;
-	int mouseY; // random position of apple
+	int mouseY; // random position of mouse
    GamePanel game;
    NormalMouse( GamePanel game){	   
 	   this.game = game;
@@ -17,8 +17,8 @@ public class NormalMouse extends JPanel implements DrawMouse {
 		draw(g);
 	} 
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		g.setColor(Color.WHITE);
+		// draw normal mouse
+		g.setColor(Color.PINK);
 		g.fillOval(game.mouseX, game.mouseY, game.UNIT_SIZE, game.UNIT_SIZE);
 		
 	}	
@@ -29,7 +29,6 @@ public class NormalMouse extends JPanel implements DrawMouse {
 			game.snakeBodyParts++;
 			game.score++;
 			game.countMouse++;
-			//newApple();
 			game.newSmallMouse();
 		}
 		
