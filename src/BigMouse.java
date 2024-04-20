@@ -20,7 +20,7 @@ public class BigMouse extends JPanel implements DrawMouse {
 		
 		public void draw(Graphics g) {
 			// draw big mouse and small mouse 
-			g.setColor(Color.WHITE);
+			g.setColor(Color.PINK);
 			g.fillOval(game.mouseX, game.mouseY, game.UNIT_SIZE, game.UNIT_SIZE);
 			g.setColor(Color.RED);
 			g.fillOval(game.bigMouseX, game.bigMouseY, game.UNIT_SIZE+4, game.UNIT_SIZE+4);
