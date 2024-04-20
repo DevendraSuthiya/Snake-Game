@@ -19,7 +19,7 @@ public class BigMouse extends JPanel implements DrawMouse {
 	   
 		
 		public void draw(Graphics g) {
-			// TODO Auto-generated method stub
+			// draw big mouse and small mouse 
 			g.setColor(Color.WHITE);
 			g.fillOval(game.mouseX, game.mouseY, game.UNIT_SIZE, game.UNIT_SIZE);
 			g.setColor(Color.RED);
@@ -36,14 +36,12 @@ public class BigMouse extends JPanel implements DrawMouse {
 				game.snakeBodyParts++;
 				game.score++;
 				game.countMouse++;
-				//newApple();
 				game.newSmallMouse();
 			}
 			else if((game.countMouse==5)&&(game.snakeX[0] == game.bigMouseX) && (game.snakeY[0]== game.bigMouseY)) {
 				  game.countMouse=0;
 					game.snakeBodyParts++;
 					game.score+=4;
-					//newApple();
 					game.newBigMouse();
 			}
 			
